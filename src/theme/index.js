@@ -3,7 +3,7 @@ import { createTheme } from '@material-ui/core';
 const theme = createTheme({
   palette: {
     background: {
-      default: '#f4f6f8',
+      default: '#ffffff',
       paper: '#ffffff'
     },
     primary: {
@@ -15,9 +15,12 @@ const theme = createTheme({
       secondary: '#6b778c'
     }
   },
+  shape: {
+    borderRadius: 16
+  },
   shadows: [
     'none',
-    '0 0 0 1px rgba(63,63,68,0.05), 0 1px 2px 0 rgba(63,63,68,0.15)',
+    'rgb(145 158 171 / 24%) 0px 0px 2px 0px, rgb(145 158 171 / 24%) 0px 16px 32px -4px',
     '0 0 1px 0 rgba(0,0,0,0.31), 0 2px 2px -2px rgba(0,0,0,0.25)',
     '0 0 1px 0 rgba(0,0,0,0.31), 0 3px 4px -2px rgba(0,0,0,0.25)',
     '0 0 1px 0 rgba(0,0,0,0.31), 0 3px 4px -2px rgba(0,0,0,0.25)',
@@ -43,6 +46,7 @@ const theme = createTheme({
     '0 0 1px 0 rgba(0,0,0,0.31), 0 24px 36px -8px rgba(0,0,0,0.25)'
   ],
   typography: {
+    fontFamily: "'Public Sans', sans-serif",
     h1: {
       fontWeight: 500,
       fontSize: 35,
@@ -75,6 +79,9 @@ const theme = createTheme({
     },
     overline: {
       fontWeight: 500
+    },
+    button: {
+      fontFamily: "'Public Sans', sans-serif"
     }
   }
 });
