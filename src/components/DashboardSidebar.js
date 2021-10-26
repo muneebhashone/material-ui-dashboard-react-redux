@@ -12,6 +12,7 @@ import {
   Typography
 } from '@material-ui/core';
 import {
+  AlignJustify as AlignJustifyIcon,
   AlertCircle as AlertCircleIcon,
   BarChart as BarChartIcon,
   Lock as LockIcon,
@@ -36,19 +37,24 @@ const items = [
     title: 'Dashboard'
   },
   {
-    href: '/app/customers',
-    icon: UsersIcon,
-    title: 'Customers'
+    href: '/app/brands',
+    icon: AlignJustifyIcon,
+    title: 'Brands'
   },
   {
-    href: '/app/products',
-    icon: ShoppingBagIcon,
-    title: 'Products'
+    href: '/app/news',
+    icon: AlignJustifyIcon,
+    title: 'News'
   },
   {
-    href: '/app/account',
-    icon: UserIcon,
-    title: 'Account'
+    href: '/app/videos',
+    icon: AlignJustifyIcon,
+    title: 'Videos'
+  },
+  {
+    href: '/app/social',
+    icon: AlignJustifyIcon,
+    title: 'Social Profiles'
   },
   {
     href: '/app/settings',

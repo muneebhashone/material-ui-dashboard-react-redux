@@ -3,6 +3,10 @@ import DashboardLayout from './components/DashboardLayout';
 import MainLayout from './components/MainLayout';
 import Account from './pages/Account';
 import CustomerList from './pages/CustomerList';
+import Brands from './pages/Brands';
+import Videos from './pages/Videos';
+import Social from './pages/Social';
+import News from './pages/News';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
@@ -17,6 +21,10 @@ const routes = [
     children: [
       { path: 'account', element: <Account /> },
       { path: 'customers', element: <CustomerList /> },
+      { path: 'brands', element: <Brands /> },
+      { path: 'news', element: <News /> },
+      { path: 'videos', element: <Videos /> },
+      { path: 'social', element: <Social /> },
       { path: 'dashboard', element: <Dashboard /> },
       { path: 'products', element: <ProductList /> },
       { path: 'settings', element: <Settings /> },
