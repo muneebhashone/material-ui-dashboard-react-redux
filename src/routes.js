@@ -3,7 +3,8 @@ import DashboardLayout from './components/DashboardLayout';
 import MainLayout from './components/MainLayout';
 import Account from './pages/Account';
 import CustomerList from './pages/CustomerList';
-import Brands from './pages/Brands';
+import Brands from './pages/Brands/Brands';
+import BrandsAdd from './pages/Brands/Add';
 import Videos from './pages/Videos';
 import Social from './pages/Social';
 import News from './pages/News';
@@ -21,6 +22,7 @@ const routes = [
     children: [
       { path: 'account', element: <Account /> },
       { path: 'customers', element: <CustomerList /> },
+      { path: 'brands/:id', element: <BrandsAdd /> },
       { path: 'brands', element: <Brands /> },
       { path: 'news', element: <News /> },
       { path: 'videos', element: <Videos /> },

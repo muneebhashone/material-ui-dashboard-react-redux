@@ -22,9 +22,6 @@ const SettingsView = () => {
       >
         <Container maxWidth="lg">
           {data && <SettingsComponent data={data.data.data} />}
-          <Box sx={{ pt: 3 }}>
-            <SettingsPassword />
-          </Box>
         </Container>
       </Box>
     </>

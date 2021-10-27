@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { Box, Container } from '@material-ui/core';
-import Results from '../components/brands/Results';
-import Toolbar from '../components/brands/Toolbar';
+import Results from 'src/components/brands/Results';
+import Toolbar from 'src/components/brands/Toolbar';
 import { useQuery } from 'react-query';
 import { getBrands } from 'src/requests';
 

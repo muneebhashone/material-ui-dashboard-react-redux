@@ -6,6 +6,8 @@ import theme from './theme';
 import routes from './routes';
 import axios from 'axios';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 axios.defaults.baseURL = 'http://localhost:8000/api/v1';
 const queryClient = new QueryClient();
@@ -19,6 +21,7 @@ const App = () => {
         <ThemeProvider theme={theme}>
           <GlobalStyles />
           {content}
+          <ToastContainer />
         </ThemeProvider>
       </StyledEngineProvider>
     </QueryClientProvider>
