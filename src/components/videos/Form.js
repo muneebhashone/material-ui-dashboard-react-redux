@@ -13,21 +13,27 @@ import {
   Typography
 } from '@material-ui/core';
 import { useFormik } from 'formik';
-import { updateBrand, addBrand } from 'src/requests';
+import { updateVideo, addVideo } from 'src/requests';
 import { useMutation } from 'react-query';
 import uploadToCloudinary from 'src/utils/uploadToCloudinary';
 import { useParams } from 'react-router';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 
+const linkRegex =
+  /^((ftp|http|https):\/\/)?(www.)?(?!.*(ftp|http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gm;
+
 const validationSchema = Yup.object().shape({
   title: Yup.string().required('Required'),
-  image: Yup.string().required('Required')
+  image: Yup.string().required('Required'),
+  link: Yup.string().matches(linkRegex, 'URL is not valid').required('Required')
 });
 
 const Form = ({ data }) => {
-  const updateMutation = useMutation((data) => updateBrand(data));
-  const addMutation = useMutation((data) => addBrand(data));
+  const updateMutation = useMutation((data) => updateVideo(data));
+  const addMutation = useMutation((data) => addVideo(data));
+  const [canAutogenerateThumbnail, setCanAutogenerateThumbnail] =
+    useState(false);
 
   const params = useParams();
 
@@ -39,6 +45,7 @@ const Form = ({ data }) => {
       title: data?.title || '',
       description: data?.description || '',
       image: data?.image || '',
+      link: data?.link || '',
       status: data?.active || false
     },
     validationSchema,
@@ -58,6 +65,7 @@ const Form = ({ data }) => {
       {
         id: params.id,
         title: values.title,
+        link: values.link,
         description: values.description,
         image: values.image,
         active: values.status
@@ -76,6 +84,7 @@ const Form = ({ data }) => {
     addMutation.mutate(
       {
         title: values.title,
+        link: values.link,
         description: values.description,
         image: values.image,
         active: values.status
@@ -102,6 +111,37 @@ const Form = ({ data }) => {
     }
   };
 
+  const handleAutogenerateThumbnail = () => {
+    let videoId;
+    if (formik.values.link.includes('youtube.com')) {
+      let decodeUrl = formik.values.link.split('v=');
+      videoId = decodeUrl[decodeUrl.length - 1];
+    }
+
+    if (formik.values.link.includes('youtu.be')) {
+      let decodeUrl = formik.values.link.split('be/');
+      videoId = decodeUrl[decodeUrl.length - 1];
+    }
+
+    const thumbnail = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+
+    formik.setFieldValue('image', thumbnail);
+  };
+
+  useEffect(() => {
+    if (formik.values.link.includes('youtube.com')) {
+      setCanAutogenerateThumbnail(true);
+      return;
+    }
+
+    if (formik.values.link.includes('youtu.be')) {
+      setCanAutogenerateThumbnail(true);
+      return;
+    }
+
+    setCanAutogenerateThumbnail(false);
+  }, [formik.values.link]);
+
   return (
     <Box>
       <Box>
@@ -114,13 +154,29 @@ const Form = ({ data }) => {
                 <Grid item md={12}>
                   <form onSubmit={formik.handleSubmit}>
                     <Grid container spacing={2}>
+                      <Grid item md={12}>
+                        <TextField
+                          value={formik.values.link}
+                          variant="outlined"
+                          placeholder="Link"
+                          name="link"
+                          label="Link"
+                          fullWidth
+                          helperText={
+                            formik.errors.link &&
+                            formik.touched.link &&
+                            formik.errors.link
+                          }
+                          onChange={formik.handleChange}
+                        />
+                      </Grid>
                       <Grid item md={9}>
                         <TextField
                           value={formik.values.title}
                           variant="outlined"
-                          placeholder="Brand Title"
+                          placeholder="Title"
                           name="title"
-                          label="Brand Title"
+                          label="Title"
                           fullWidth
                           helperText={
                             formik.errors.title &&
@@ -167,12 +223,12 @@ const Form = ({ data }) => {
                       <Grid item md={8}>
                         <TextField
                           value={formik.values.description}
-                          label="Brand Description"
+                          label="Description"
                           multiline
                           rows={4}
                           value={formik.values.description}
                           variant="outlined"
-                          placeholder="Brand Description"
+                          placeholder="Description"
                           name="description"
                           fullWidth
                           onChange={formik.handleChange}
@@ -198,7 +254,7 @@ const Form = ({ data }) => {
                         htmlFor="upload-logo-dark"
                       >
                         <Button
-                          variant="contained"
+                          variant="outlined"
                           style={{ borderRadius: '6px', height: '100%' }}
                           component="span"
                         >
@@ -214,6 +270,18 @@ const Form = ({ data }) => {
                         variant="contained"
                       >
                         {params.id ? 'Update' : 'Add'}
+                      </Button>
+                      <Button
+                        type="button"
+                        style={{
+                          padding: '15px',
+                          borderRadius: '6px'
+                        }}
+                        variant="outlined"
+                        disabled={!canAutogenerateThumbnail}
+                        onClick={handleAutogenerateThumbnail}
+                      >
+                        Auto Generate Thumbnail (Only works with YouTube)
                       </Button>
                     </Box>
                   </form>

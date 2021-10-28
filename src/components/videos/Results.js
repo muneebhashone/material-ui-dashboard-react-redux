@@ -13,15 +13,24 @@ import {
   TableRow,
   Typography
 } from '@material-ui/core';
+import { HiOutlineExternalLink } from 'react-icons/hi';
 import ActionMenu from '../action-menu/ActionMenu';
+import { useNavigate } from 'react-router';
+import { useMutation } from 'react-query';
+import { deleteVideo } from 'src/requests';
+import { toast } from 'react-toastify';
 
-const Results = ({ data, ...rest }) => {
+const Results = ({ refetchData, data, ...rest }) => {
   const [selectedDataIds, setSelectedDataIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
   const [startPoint, setStartPoint] = useState(0);
   const [endPoint, setEndPoint] = useState(0);
-
+  const deleteMutation = useMutation('deleteVideo', (data) =>
+    deleteVideo(data)
+  );
+  const notifyDelete = () => toast('Delete Success');
+  const navigate = useNavigate();
   const handleLimitChange = (event) => {
     setLimit(event.target.value);
   };
@@ -40,6 +49,22 @@ const Results = ({ data, ...rest }) => {
     }
   };
 
+  const handleEdit = (id) => {
+    navigate(`/app/videos/edit/${id}`);
+  };
+
+  const handleDelete = (id) => {
+    deleteMutation.mutate(
+      { id: id },
+      {
+        onSuccess: () => {
+          notifyDelete();
+          refetchData();
+        }
+      }
+    );
+  };
+
   useEffect(() => {
     setEndPoint(limit);
   }, [limit]);
@@ -54,6 +79,7 @@ const Results = ({ data, ...rest }) => {
                 <TableCell>Title</TableCell>
                 <TableCell>Description</TableCell>
                 <TableCell>Image</TableCell>
+                <TableCell>Link</TableCell>
                 <TableCell>Created</TableCell>
                 <TableCell align="center">Action</TableCell>
               </TableRow>
@@ -87,10 +113,18 @@ const Results = ({ data, ...rest }) => {
                     />
                   </TableCell>
                   <TableCell>
+                    <a href={item.link} target="_blank">
+                      <HiOutlineExternalLink size={25} color="#5664d2" />
+                    </a>
+                  </TableCell>
+                  <TableCell>
                     {moment(item.createdAt).format('DD/MM/YYYY')}
                   </TableCell>
                   <TableCell align="center">
-                    <ActionMenu />
+                    <ActionMenu
+                      handleEdit={() => handleEdit(item._id)}
+                      handleDelete={() => handleDelete(item._id)}
+                    />
                   </TableCell>
                 </TableRow>
               ))}

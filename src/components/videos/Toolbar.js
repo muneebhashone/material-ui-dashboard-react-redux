@@ -8,8 +8,10 @@ import {
   SvgIcon
 } from '@material-ui/core';
 import { Search as SearchIcon } from 'react-feather';
+import { useNavigate } from 'react-router';
 
 const CustomerListToolbar = (props) => {
+  const navigate = useNavigate();
   return (
     <Box {...props}>
       <Box
@@ -18,8 +20,12 @@ const CustomerListToolbar = (props) => {
           justifyContent: 'flex-end'
         }}
       >
-        <Button color="primary" variant="contained">
-          Add Social
+        <Button
+          onClick={() => navigate('/app/videos/add')}
+          color="primary"
+          variant="contained"
+        >
+          Add Video
         </Button>
       </Box>
       <Box sx={{ mt: 3 }}>
