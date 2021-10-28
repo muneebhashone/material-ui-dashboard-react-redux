@@ -54,6 +54,24 @@ export const getSocial = () => {
   return axios.get('/social');
 };
 
+export const addSocial = (data) => {
+  return axios.post('/social', data);
+};
+
+export const getSingleSocial = (id) => {
+  return axios.get(`/social/${id}`);
+};
+
+export const updateSocial = (data) => {
+  const socialId = data.id;
+  delete data.id;
+  return axios.patch(`/social/${socialId}`, data);
+};
+
+export const deleteSocial = ({ id }) => {
+  return axios.delete(`/social/${id}`);
+};
+
 // News
 
 export const getNews = () => {

@@ -13,21 +13,25 @@ import {
   Typography
 } from '@material-ui/core';
 import { useFormik } from 'formik';
-import { updateNews, addNews } from 'src/requests';
+import { updateSocial, addSocial } from 'src/requests';
 import { useMutation } from 'react-query';
 import uploadToCloudinary from 'src/utils/uploadToCloudinary';
 import { useParams } from 'react-router';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 
+const linkRegex =
+  /^((ftp|http|https):\/\/)?(www.)?(?!.*(ftp|http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gm;
+
 const validationSchema = Yup.object().shape({
   title: Yup.string().required('Required'),
-  image: Yup.string().required('Required')
+  image: Yup.string().required('Required'),
+  link: Yup.string().matches(linkRegex, 'URL is not valid').required('Required')
 });
 
 const Form = ({ data }) => {
-  const updateMutation = useMutation((data) => updateNews(data));
-  const addMutation = useMutation((data) => addNews(data));
+  const updateMutation = useMutation((data) => updateSocial(data));
+  const addMutation = useMutation((data) => addSocial(data));
 
   const params = useParams();
 
@@ -36,10 +40,8 @@ const Form = ({ data }) => {
 
   const formik = useFormik({
     initialValues: {
-      title: data?.title || '',
-      description: data?.description || '',
-      image: data?.image || '',
-      status: data?.active || false,
+      title: data?.name || '',
+      image: data?.imgSrc || '',
       link: data?.link || ''
     },
     validationSchema,
@@ -58,11 +60,9 @@ const Form = ({ data }) => {
     updateMutation.mutate(
       {
         id: params.id,
+        name: values.title,
         link: values.link,
-        title: values.title,
-        description: values.description,
-        image: values.image,
-        active: values.status
+        imgSrc: values.image
       },
       {
         onSuccess: (data) => {
@@ -77,10 +77,9 @@ const Form = ({ data }) => {
   const handleAddSubmit = (values) => {
     addMutation.mutate(
       {
-        title: values.title,
-        description: values.description,
-        image: values.image,
-        active: values.status
+        name: values.title,
+        link: values.link,
+        imgSrc: values.image
       },
       {
         onSuccess: (data) => {
@@ -117,55 +116,6 @@ const Form = ({ data }) => {
                   <form onSubmit={formik.handleSubmit}>
                     <Grid container spacing={2}>
                       <Grid item md={12}>
-                        <TextField
-                          value={formik.values.link}
-                          variant="outlined"
-                          placeholder="News Link"
-                          name="link"
-                          label="News Link"
-                          fullWidth
-                          helperText={
-                            formik.errors.link &&
-                            formik.touched.link &&
-                            'Link is required'
-                          }
-                          onChange={formik.handleChange}
-                        />
-                      </Grid>
-                      <Grid item md={9}>
-                        <TextField
-                          value={formik.values.title}
-                          variant="outlined"
-                          placeholder="News Title"
-                          name="title"
-                          label="News Title"
-                          fullWidth
-                          helperText={
-                            formik.errors.title &&
-                            formik.touched.title &&
-                            'Title is required'
-                          }
-                          onChange={formik.handleChange}
-                        />
-                      </Grid>
-
-                      <Grid item md={3}>
-                        <FormControl fullWidth>
-                          <InputLabel id="status-label">Status</InputLabel>
-                          <Select
-                            labelId="status-label"
-                            id="status"
-                            value={formik.values.status}
-                            label="Status"
-                            name="status"
-                            onChange={formik.handleChange}
-                          >
-                            <MenuItem value={true}>Active</MenuItem>
-                            <MenuItem value={false}>Disable</MenuItem>
-                          </Select>
-                        </FormControl>
-                      </Grid>
-                      <Grid item md={4}>
                         <img
                           width="100%"
                           height="122px"
@@ -181,18 +131,35 @@ const Form = ({ data }) => {
                           </Typography>
                         )}
                       </Grid>
-
-                      <Grid item md={8}>
+                      <Grid item md={6}>
                         <TextField
-                          value={formik.values.description}
-                          label="News Description"
-                          multiline
-                          rows={4}
-                          value={formik.values.description}
+                          value={formik.values.link}
                           variant="outlined"
-                          placeholder="News Description"
-                          name="description"
+                          placeholder="Link"
+                          name="link"
+                          label="Link"
                           fullWidth
+                          helperText={
+                            formik.errors.link &&
+                            formik.touched.link &&
+                            formik.errors.link
+                          }
+                          onChange={formik.handleChange}
+                        />
+                      </Grid>
+                      <Grid item md={6}>
+                        <TextField
+                          value={formik.values.title}
+                          variant="outlined"
+                          placeholder="Title"
+                          name="title"
+                          label="Title"
+                          fullWidth
+                          helperText={
+                            formik.errors.title &&
+                            formik.touched.title &&
+                            'Title is required'
+                          }
                           onChange={formik.handleChange}
                         />
                       </Grid>
@@ -216,7 +183,7 @@ const Form = ({ data }) => {
                         htmlFor="upload-logo-dark"
                       >
                         <Button
-                          variant="contained"
+                          variant="outlined"
                           style={{ borderRadius: '6px', height: '100%' }}
                           component="span"
                         >

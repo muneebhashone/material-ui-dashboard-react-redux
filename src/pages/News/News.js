@@ -1,18 +1,18 @@
 import { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { Box, Container } from '@material-ui/core';
-import Results from '../components/social/Results';
-import Toolbar from '../components/social/Toolbar';
+import Results from 'src/components/news/Results';
+import Toolbar from 'src/components/news/Toolbar';
 import { useQuery } from 'react-query';
-import { getSocial } from 'src/requests';
+import { getNews } from 'src/requests';
 
 const Brands = () => {
-  const { data, loading, error } = useQuery('getSocial', getSocial);
+  const { data, loading, error, refetch } = useQuery('getNews', getNews);
 
   return (
     <>
       <Helmet>
-        <title>Social Profiles | Material Kit</title>
+        <title>News | Material Kit</title>
       </Helmet>
       <Box
         sx={{
@@ -23,7 +23,9 @@ const Brands = () => {
       >
         <Container maxWidth={false}>
           <Toolbar />
-          <Box sx={{ pt: 3 }}>{data && <Results data={data.data.data} />}</Box>
+          <Box sx={{ pt: 3 }}>
+            {data && <Results refetchData={refetch} data={data.data.data} />}
+          </Box>
         </Container>
       </Box>
     </>

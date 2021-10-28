@@ -14,13 +14,23 @@ import {
   Typography
 } from '@material-ui/core';
 import ActionMenu from '../action-menu/ActionMenu';
+import { useNavigate } from 'react-router';
+import { useMutation } from 'react-query';
+import { deleteSocial } from 'src/requests';
+import { toast } from 'react-toastify';
 
-const Results = ({ data, ...rest }) => {
+const Results = ({ refetchData, data, ...rest }) => {
   const [selectedDataIds, setSelectedDataIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
   const [startPoint, setStartPoint] = useState(0);
   const [endPoint, setEndPoint] = useState(0);
+
+  const navigate = useNavigate();
+  const deleteMutation = useMutation('deleteSocial', (data) =>
+    deleteSocial(data)
+  );
+  const notifyDelete = () => toast('Delete Success');
 
   const handleLimitChange = (event) => {
     setLimit(event.target.value);
@@ -38,6 +48,22 @@ const Results = ({ data, ...rest }) => {
       setStartPoint(startPointNum);
       setEndPoint(startPointNum + limit);
     }
+  };
+
+  const handleEdit = (id) => {
+    navigate(`/app/social/edit/${id}`);
+  };
+
+  const handleDelete = (id) => {
+    deleteMutation.mutate(
+      { id: id },
+      {
+        onSuccess: () => {
+          notifyDelete();
+          refetchData();
+        }
+      }
+    );
   };
 
   useEffect(() => {
@@ -90,7 +116,10 @@ const Results = ({ data, ...rest }) => {
                     {moment(item.createdAt).format('DD/MM/YYYY')}
                   </TableCell>
                   <TableCell align="center">
-                    <ActionMenu />
+                    <ActionMenu
+                      handleEdit={() => handleEdit(item._id)}
+                      handleDelete={() => handleDelete(item._id)}
+                    />
                   </TableCell>
                 </TableRow>
               ))}
