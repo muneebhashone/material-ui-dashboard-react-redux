@@ -2,17 +2,18 @@ import { createTheme } from '@material-ui/core';
 
 const theme = createTheme({
   palette: {
+    mode: 'dark',
     background: {
-      default: '#ffffff',
-      paper: '#ffffff'
+      default: '#101b27',
+      paper: '#131d29'
     },
     primary: {
       contrastText: '#ffffff',
-      main: '#5664d2'
+      main: '#228ec2'
     },
     text: {
-      primary: '#172b4d',
-      secondary: '#6b778c'
+      primary: '#ffffff',
+      secondary: '#ffffff'
     }
   },
   shape: {
@@ -20,7 +21,7 @@ const theme = createTheme({
   },
   shadows: [
     'none',
-    'rgb(145 158 171 / 24%) 0px 0px 2px 0px, rgb(145 158 171 / 24%) 0px 16px 32px -4px',
+    'rgba(17,17,23, 24%) 0px 0px 2px 0px, rgba(17,17,23,24%) 0px 16px 32px -4px',
     '0 0 1px 0 rgba(0,0,0,0.31), 0 2px 2px -2px rgba(0,0,0,0.25)',
     '0 0 1px 0 rgba(0,0,0,0.31), 0 3px 4px -2px rgba(0,0,0,0.25)',
     '0 0 1px 0 rgba(0,0,0,0.31), 0 3px 4px -2px rgba(0,0,0,0.25)',
