@@ -1,7 +1,8 @@
 const Logo = (props) => (
   <img
+    height={40}
     alt="Logo"
-    src="/static/logo.svg"
+    src="https://metricgaming.com/img/metric-logo.png"
     {...props}
   />
 );
