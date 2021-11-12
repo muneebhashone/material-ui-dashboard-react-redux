@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/demo/metric/static/js/main.f65818e3.chunk.js",
-    "main.js.map": "/demo/metric/static/js/main.f65818e3.chunk.js.map",
+    "main.js": "/demo/metric/static/js/main.72501034.chunk.js",
+    "main.js.map": "/demo/metric/static/js/main.72501034.chunk.js.map",
     "runtime-main.js": "/demo/metric/static/js/runtime-main.35222174.js",
     "runtime-main.js.map": "/demo/metric/static/js/runtime-main.35222174.js.map",
     "static/css/2.95519cfd.chunk.css": "/demo/metric/static/css/2.95519cfd.chunk.css",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.35222174.js",
     "static/css/2.95519cfd.chunk.css",
     "static/js/2.5809713c.chunk.js",
-    "static/js/main.f65818e3.chunk.js"
+    "static/js/main.72501034.chunk.js"
   ]
 }
