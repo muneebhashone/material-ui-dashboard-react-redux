@@ -18,10 +18,11 @@ import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 import Settings from './pages/Settings';
+import { URL } from 'src/config';
 
 const routes = [
   {
-    path: 'app',
+    path: `${URL}/app`,
     element: <DashboardLayout />,
     children: [
       { path: 'account', element: <Account /> },
@@ -39,17 +40,16 @@ const routes = [
       { path: 'social', element: <Social /> },
       { path: 'dashboard', element: <Dashboard /> },
       { path: 'settings', element: <Settings /> },
-      { path: '*', element: <Navigate to="/404" /> }
+      { path: '*', element: <Navigate to={`${URL}/404`} /> }
     ]
   },
   {
-    path: '/',
+    path: `${URL}`,
     element: <MainLayout />,
     children: [
       { path: 'login', element: <Login /> },
       { path: '404', element: <NotFound /> },
-      { path: '/', element: <Navigate to="/app/dashboard" /> },
-      { path: '*', element: <Navigate to="/404" /> }
+      { path: '*', element: <Navigate to={`${URL}/app/brands`} /> }
     ]
   }
 ];

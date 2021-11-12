@@ -13,17 +13,15 @@ import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
 import Logo from './Logo';
+import { URL } from 'src/config';
 
 const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
   const [notifications] = useState([]);
 
   return (
-    <AppBar
-      elevation={0}
-      {...rest}
-    >
+    <AppBar elevation={0} {...rest}>
       <Toolbar>
-        <RouterLink to="/">
+        <RouterLink to={`${URL}/app/brands`}>
           <Logo />
         </RouterLink>
         <Box sx={{ flexGrow: 1 }} />

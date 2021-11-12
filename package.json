@@ -2,7 +2,7 @@
   "name": "react-material-dashboard",
   "author": "DeviasIO",
   "licence": "MIT",
-  "homepage": ".",
+  "homepage": "demo/metric",
   "version": "1.0.0",
   "private": false,
   "scripts": {

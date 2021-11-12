@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 import { Search as SearchIcon } from 'react-feather';
 import { useNavigate } from 'react-router';
+import { URL } from 'src/config';
 
 const CustomerListToolbar = (props) => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const CustomerListToolbar = (props) => {
         }}
       >
         <Button
-          onClick={() => navigate('/app/videos/add')}
+          onClick={() => navigate(`${URL}/app/videos/add`)}
           color="primary"
           variant="contained"
         >
