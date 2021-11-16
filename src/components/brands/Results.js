@@ -79,7 +79,8 @@ const Results = ({ refetchData, data, ...rest }) => {
               <TableRow>
                 <TableCell>Title</TableCell>
                 <TableCell>Description</TableCell>
-                <TableCell>Image</TableCell>
+                <TableCell align="center">Image</TableCell>
+                <TableCell>Status</TableCell>
                 <TableCell>Created</TableCell>
                 <TableCell align="center">Action</TableCell>
               </TableRow>
@@ -103,8 +104,8 @@ const Results = ({ refetchData, data, ...rest }) => {
                       </Typography>
                     </Box>
                   </TableCell>
-                  <TableCell>{item.description}</TableCell>
-                  <TableCell>
+                  <TableCell>{item.description || 'No Description'}</TableCell>
+                  <TableCell align="center">
                     <img
                       width="150px"
                       height="100px"
@@ -112,6 +113,7 @@ const Results = ({ refetchData, data, ...rest }) => {
                       src={item.image}
                     />
                   </TableCell>
+                  <TableCell>{item.active ? 'Active' : 'Disabled'}</TableCell>
                   <TableCell>
                     {moment(item.createdAt).format('DD/MM/YYYY')}
                   </TableCell>
