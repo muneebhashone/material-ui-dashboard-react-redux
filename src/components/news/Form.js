@@ -80,6 +80,7 @@ const Form = ({ data }) => {
         title: values.title,
         description: values.description,
         image: values.image,
+        link: values.link,
         active: values.status
       },
       {

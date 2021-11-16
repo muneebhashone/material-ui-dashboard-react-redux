@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
@@ -13,14 +14,55 @@ import {
 } from '@material-ui/core';
 import FacebookIcon from '../icons/Facebook';
 import GoogleIcon from '../icons/Google';
+import { useMutation } from 'react-query';
+import { login as LOGIN } from 'src/requests';
+import { useAuth } from 'src/Context/UserContext';
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const navigate = useNavigate();
+  const { setCurrentUser, currentUser } = useAuth();
+  const login = useMutation((data) => LOGIN(data));
+  const notifyError = (message) => toast(message);
+
+  const handleLoginUserSubmit = (values) => {
+    console.log(values);
+
+    login.mutate(
+      {
+        email: values.email,
+        password: values.password
+      },
+      {
+        onSuccess: ({ data }) => {
+          const token = data.token;
+          setCurrentUser({ ...data.data.user, token });
+          return true;
+        },
+        onError: (err) => notifyError('Invalid credentials')
+      }
+    );
+
+    // setCurrentUser(data.login);
+
+    // navigate(URL + '/app/brands');
+  };
+
+  useEffect(() => {
+    if (currentUser || localStorage.getItem('currentUser')) {
+      navigate(URL + '/app/brands');
+    }
+  }, [currentUser]);
+
+  if (currentUser || localStorage.getItem('currentUser')) {
+    navigate(URL + '/app/brands');
+    return null;
+  }
 
   return (
     <>
       <Helmet>
-        <title>Login | Material Kit</title>
+        <title>Login | Metric Gaming Dashboard</title>
       </Helmet>
       <Box
         sx={{
@@ -34,15 +76,18 @@ const Login = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              email: 'demo@devias.io',
-              password: 'Password123'
+              email: '',
+              password: ''
             }}
             validationSchema={Yup.object().shape({
-              email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
+              email: Yup.string()
+                .email('Must be a valid email')
+                .max(255)
+                .required('Email is required'),
               password: Yup.string().max(255).required('Password is required')
             })}
-            onSubmit={() => {
-              navigate('/app/dashboard', { replace: true });
+            onSubmit={(values) => {
+              handleLoginUserSubmit(values);
             }}
           >
             {({
@@ -56,10 +101,7 @@ const Login = () => {
             }) => (
               <form onSubmit={handleSubmit}>
                 <Box sx={{ mb: 3 }}>
-                  <Typography
-                    color="textPrimary"
-                    variant="h2"
-                  >
+                  <Typography color="textPrimary" variant="h2">
                     Sign in
                   </Typography>
                   <Typography
@@ -70,56 +112,7 @@ const Login = () => {
                     Sign in on the internal platform
                   </Typography>
                 </Box>
-                <Grid
-                  container
-                  spacing={3}
-                >
-                  <Grid
-                    item
-                    xs={12}
-                    md={6}
-                  >
-                    <Button
-                      color="primary"
-                      fullWidth
-                      startIcon={<FacebookIcon />}
-                      onClick={handleSubmit}
-                      size="large"
-                      variant="contained"
-                    >
-                      Login with Facebook
-                    </Button>
-                  </Grid>
-                  <Grid
-                    item
-                    xs={12}
-                    md={6}
-                  >
-                    <Button
-                      fullWidth
-                      startIcon={<GoogleIcon />}
-                      onClick={handleSubmit}
-                      size="large"
-                      variant="contained"
-                    >
-                      Login with Google
-                    </Button>
-                  </Grid>
-                </Grid>
-                <Box
-                  sx={{
-                    pb: 1,
-                    pt: 3
-                  }}
-                >
-                  <Typography
-                    align="center"
-                    color="textSecondary"
-                    variant="body1"
-                  >
-                    or login with email address
-                  </Typography>
-                </Box>
+
                 <TextField
                   error={Boolean(touched.email && errors.email)}
                   fullWidth
@@ -149,7 +142,6 @@ const Login = () => {
                 <Box sx={{ py: 2 }}>
                   <Button
                     color="primary"
-                    disabled={isSubmitting}
                     fullWidth
                     size="large"
                     type="submit"
@@ -158,16 +150,6 @@ const Login = () => {
                     Sign in now
                   </Button>
                 </Box>
-                <Typography
-                  color="textSecondary"
-                  variant="body1"
-                >
-                  Don&apos;t have an account?
-                  {' '}
-                  <Link component={RouterLink} to="/register" variant="h6" underline="hover">
-                    Sign up
-                  </Link>
-                </Typography>
               </form>
             )}
           </Formik>

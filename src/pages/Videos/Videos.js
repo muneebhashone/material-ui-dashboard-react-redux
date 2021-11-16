@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Box, Container } from '@material-ui/core';
 import Results from 'src/components/videos/Results';
@@ -8,11 +8,22 @@ import { getVideos } from 'src/requests';
 
 const Brands = () => {
   const { data, loading, error, refetch } = useQuery('getVideos', getVideos);
+  const [search, setSearch] = useState('');
+
+  const getData = () => {
+    if (!data) return [];
+    if (!search) return data.data.data;
+    return data.data.data.filter(
+      (item) =>
+        item.title.toLowerCase().includes(search.toLowerCase()) ||
+        item.description.toLowerCase().includes(search.toLowerCase())
+    );
+  };
 
   return (
     <>
       <Helmet>
-        <title>Videos | Material Kit</title>
+        <title>Videos | Metric Gaming Dashboard</title>
       </Helmet>
       <Box
         sx={{
@@ -22,9 +33,9 @@ const Brands = () => {
         }}
       >
         <Container maxWidth={false}>
-          <Toolbar />
+          <Toolbar onChange={(e) => setSearch(e.target.value)} />
           <Box sx={{ pt: 3 }}>
-            {data && <Results refetchData={refetch} data={data.data.data} />}
+            {data && <Results refetchData={refetch} data={getData()} />}
           </Box>
         </Container>
       </Box>

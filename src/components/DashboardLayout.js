@@ -1,8 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { styled } from '@material-ui/core/styles';
 import DashboardNavbar from './DashboardNavbar';
 import DashboardSidebar from './DashboardSidebar';
+import { useAuth } from 'src/Context/UserContext';
+import { useNavigate } from 'react-router';
+import { URL } from 'src/config';
 
 const DashboardLayoutRoot = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
@@ -36,6 +39,18 @@ const DashboardLayoutContent = styled('div')({
 
 const DashboardLayout = () => {
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
+  const { currentUser } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!currentUser && !localStorage.getItem('currentUser')) {
+      navigate(URL + '/login');
+    }
+  }, [currentUser]);
+
+  if (!currentUser && !localStorage.getItem('currentUser')) {
+    return null;
+  }
 
   return (
     <DashboardLayoutRoot>

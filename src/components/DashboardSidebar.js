@@ -24,6 +24,7 @@ import {
 } from 'react-feather';
 import NavItem from './NavItem';
 import { URL } from 'src/config';
+import { useAuth } from 'src/Context/UserContext';
 
 const user = {
   avatar: '/static/images/avatars/avatar_6.png',
@@ -81,6 +82,7 @@ const items = [
 
 const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   const location = useLocation();
+  const { logout } = useAuth();
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
@@ -120,6 +122,14 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
         <Typography color="textSecondary" variant="body2">
           {user.jobTitle}
         </Typography>
+        <Button
+          style={{ marginTop: '10px' }}
+          onClick={() => logout()}
+          variant="contained"
+          size="small"
+        >
+          Logout
+        </Button>
       </Box>
       <Divider />
       <Box sx={{ p: 2 }}>

@@ -14,7 +14,7 @@ import { URL } from 'src/config';
 const CustomerListToolbar = (props) => {
   const navigate = useNavigate();
   return (
-    <Box {...props}>
+    <Box>
       <Box
         sx={{
           display: 'flex',
@@ -34,6 +34,7 @@ const CustomerListToolbar = (props) => {
           <CardContent>
             <Box sx={{ maxWidth: 500 }}>
               <TextField
+                {...props}
                 fullWidth
                 InputProps={{
                   startAdornment: (

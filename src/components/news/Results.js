@@ -18,6 +18,7 @@ import { useNavigate } from 'react-router';
 import { useMutation } from 'react-query';
 import { deleteNews } from 'src/requests';
 import { toast } from 'react-toastify';
+import { URL } from 'src/config';
 
 const Results = ({ refetchData, data, ...rest }) => {
   const [selectedDataIds, setSelectedDataIds] = useState([]);
@@ -48,7 +49,7 @@ const Results = ({ refetchData, data, ...rest }) => {
   };
 
   const handleEdit = (id) => {
-    navigate(`/app/news/edit/${id}`);
+    navigate(`${URL}/app/news/edit/${id}`);
   };
 
   const handleDelete = (id) => {

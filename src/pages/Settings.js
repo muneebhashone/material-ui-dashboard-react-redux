@@ -11,7 +11,7 @@ const SettingsView = () => {
   return (
     <>
       <Helmet>
-        <title>Settings | Material Kit</title>
+        <title>Settings | Metric Gaming Dashboard</title>
       </Helmet>
       <Box
         sx={{

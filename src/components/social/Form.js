@@ -26,7 +26,7 @@ const linkRegex =
 const validationSchema = Yup.object().shape({
   title: Yup.string().required('Required'),
   image: Yup.string().required('Required'),
-  link: Yup.string().matches(linkRegex, 'URL is not valid').required('Required')
+  link: Yup.string().required('Required')
 });
 
 const Form = ({ data }) => {

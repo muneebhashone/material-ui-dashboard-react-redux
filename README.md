@@ -1,1 +1,1 @@
-## [Material Kit - React Redux]
+## [Metric Gaming Dashboard - React Redux]

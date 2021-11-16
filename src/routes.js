@@ -49,6 +49,7 @@ const routes = [
     children: [
       { path: 'login', element: <Login /> },
       { path: '404', element: <NotFound /> },
+      { path: URL + '/', element: <Navigate to={`${URL}/login`} /> },
       { path: '*', element: <Navigate to={`${URL}/app/brands`} /> }
     ]
   }
