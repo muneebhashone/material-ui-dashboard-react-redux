@@ -32,7 +32,7 @@ const Results = ({ refetchData, data, ...rest }) => {
   };
   const navigate = useNavigate();
   const deleteMutation = useMutation('deleteNews', (data) => deleteNews(data));
-  const notifyDelete = () => toast('Delete Success');
+  const notifyDelete = () => toast('Successfully deleted');
 
   const handlePageChange = (event, newPage) => {
     setPage(newPage);

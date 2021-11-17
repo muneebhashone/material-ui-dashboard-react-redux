@@ -30,7 +30,7 @@ const Results = ({ refetchData, data, ...rest }) => {
   const deleteMutation = useMutation('deleteVideo', (data) =>
     deleteVideo(data)
   );
-  const notifyDelete = () => toast('Delete Success');
+  const notifyDelete = () => toast('Successfully deleted');
   const navigate = useNavigate();
   const handleLimitChange = (event) => {
     setLimit(event.target.value);

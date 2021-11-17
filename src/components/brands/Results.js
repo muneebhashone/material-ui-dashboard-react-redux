@@ -29,7 +29,7 @@ const Results = ({ refetchData, data, ...rest }) => {
   const deleteMutation = useMutation('deleteBrand', (data) =>
     deleteBrand(data)
   );
-  const notifyDelete = () => toast('Delete Success');
+  const notifyDelete = () => toast('Successfully deleted');
   const navigate = useNavigate();
 
   const handleLimitChange = (event) => {

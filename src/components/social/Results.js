@@ -31,7 +31,7 @@ const Results = ({ refetchData, data, ...rest }) => {
   const deleteMutation = useMutation('deleteSocial', (data) =>
     deleteSocial(data)
   );
-  const notifyDelete = () => toast('Delete Success');
+  const notifyDelete = () => toast('Successfully deleted');
 
   const handleLimitChange = (event) => {
     setLimit(event.target.value);
