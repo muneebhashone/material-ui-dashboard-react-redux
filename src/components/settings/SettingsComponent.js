@@ -18,7 +18,7 @@ import { useMutation } from 'react-query';
 import { toast } from 'react-toastify';
 
 const SettingsComponent = ({ data }) => {
-  const notify = () => toast('Settings updated');
+  const notifyUpdated = () => toast('Settings updated');
 
   const updateSettingsMutation = useMutation((updatedData) =>
     updateSettings(updatedData)
@@ -49,7 +49,9 @@ const SettingsComponent = ({ data }) => {
         address_two: values.address_two
       },
       {
-        onSuccess: () => console.log(updateSettingsMutation.data),
+        onSuccess: () => {
+          notifyUpdated();
+        },
         onError: (err) => console.log(err)
       }
     );

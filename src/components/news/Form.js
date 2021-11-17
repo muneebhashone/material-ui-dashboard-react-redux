@@ -31,8 +31,8 @@ const Form = ({ data }) => {
 
   const params = useParams();
 
-  const notifyEdit = () => toast('Edit Success');
-  const notifyAdd = () => toast('Add Success');
+  const notifyEdit = () => toast('Successfully updated');
+  const notifyAdd = () => toast('Successfully added');
 
   const formik = useFormik({
     initialValues: {
