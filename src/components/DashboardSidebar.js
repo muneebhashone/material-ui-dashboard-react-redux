@@ -59,6 +59,11 @@ const items = [
     title: 'Social Profiles'
   },
   {
+    href: URL + '/app/contact',
+    icon: AlignJustifyIcon,
+    title: 'Contact'
+  },
+  {
     href: URL + '/app/settings',
     icon: SettingsIcon,
     title: 'Settings'

@@ -109,3 +109,9 @@ export const getSettings = () => {
 export const updateSettings = (data) => {
   return axios.patch('/settings', data);
 };
+
+// Contact
+
+export const getContacts = () => {
+  return axios.get('/contact');
+};

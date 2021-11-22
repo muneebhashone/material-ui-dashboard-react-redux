@@ -15,6 +15,7 @@ import News from './pages/News/News';
 import NewsAdd from './pages/News/Add';
 import NewsEdit from './pages/News/Edit';
 import Dashboard from './pages/Dashboard';
+import Contact from './pages/Contact/Contact';
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 import Settings from './pages/Settings';
@@ -39,6 +40,7 @@ const routes = [
       { path: 'social/add', element: <SocialAdd /> },
       { path: 'social', element: <Social /> },
       { path: 'dashboard', element: <Dashboard /> },
+      { path: 'contact', element: <Contact /> },
       { path: 'settings', element: <Settings /> },
       { path: '*', element: <Navigate to={`${URL}/404`} /> }
     ]
