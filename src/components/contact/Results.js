@@ -71,24 +71,15 @@ const Results = ({ refetchData, data, ...rest }) => {
                   key={item._id}
                   selected={selectedDataIds.indexOf(item._id) !== -1}
                 >
-                  <TableCell>
-                    <Box
-                      sx={{
-                        alignItems: 'center',
-                        display: 'flex'
-                      }}
-                    >
-                      <Typography color="textPrimary" variant="body1">
-                        {item.name}
-                      </Typography>
-                    </Box>
-                  </TableCell>
-                  <TableCell>{item.companyName}</TableCell>
+                  <TableCell>{item.name}</TableCell>
+                  <TableCell>{item.companyName || 'No Company Name'}</TableCell>
 
                   <TableCell>{item.email}</TableCell>
                   <TableCell>{item.phone}</TableCell>
                   <TableCell>
-                    <div style={{ width: '300px', overflowWrap: 'break-word' }}>
+                    <div
+                      style={{ maxWidth: '400px', overflowWrap: 'break-word' }}
+                    >
                       {item.description}
                     </div>
                   </TableCell>
