@@ -15,12 +15,14 @@ const Brands = () => {
 
   const getData = () => {
     if (!data) return [];
+    console.log(data.data.data);
     if (!search) return data.data.data;
     return data.data.data.filter(
       (item) =>
-        item.name.toLowerCase().includes(search.toLowerCase()) ||
-        item.companyName.toLowerCase().includes(search.toLowerCase()) ||
-        item.description.toLowerCase().includes(search.toLowerCase())
+        item.name?.toLowerCase().includes(search.toLowerCase()) ||
+        item.companyName?.toLowerCase().includes(search.toLowerCase()) ||
+        item.email?.toLowerCase().includes(search.toLowerCase()) ||
+        item.phone?.toLowerCase().includes(search.toLowerCase())
     );
   };
 

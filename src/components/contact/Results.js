@@ -87,7 +87,11 @@ const Results = ({ refetchData, data, ...rest }) => {
 
                   <TableCell>{item.email}</TableCell>
                   <TableCell>{item.phone}</TableCell>
-                  <TableCell>{item.description}</TableCell>
+                  <TableCell>
+                    <div style={{ width: '300px', overflowWrap: 'break-word' }}>
+                      {item.description}
+                    </div>
+                  </TableCell>
 
                   <TableCell>
                     {moment(item.createdAt).format('DD/MM/YYYY')}
