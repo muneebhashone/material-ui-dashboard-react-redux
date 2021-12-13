@@ -4,7 +4,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 
-export default function ActionMenu({ handleEdit, handleDelete }) {
+export default function ActionMenu({ handleEdit, handleDelete, handleView }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -34,6 +34,16 @@ export default function ActionMenu({ handleEdit, handleDelete }) {
           'aria-labelledby': 'basic-button'
         }}
       >
+        {handleView && (
+          <MenuItem
+            onClick={() => {
+              handleClose();
+              handleView && handleView();
+            }}
+          >
+            View Applications
+          </MenuItem>
+        )}
         <MenuItem
           onClick={() => {
             handleClose();

@@ -59,6 +59,16 @@ const items = [
     title: 'Social Profiles'
   },
   {
+    href: URL + '/app/jobs',
+    icon: AlignJustifyIcon,
+    title: 'Jobs'
+  },
+  // {
+  //   href: URL + '/app/applications',
+  //   icon: AlignJustifyIcon,
+  //   title: 'Job Applications'
+  // },
+  {
     href: URL + '/app/contact',
     icon: AlignJustifyIcon,
     title: 'Contact'
@@ -68,21 +78,6 @@ const items = [
     icon: SettingsIcon,
     title: 'Settings'
   }
-  // {
-  //   href: '/login',
-  //   icon: LockIcon,
-  //   title: 'Login'
-  // },
-  // {
-  //   href: '/register',
-  //   icon: UserPlusIcon,
-  //   title: 'Register'
-  // },
-  // {
-  //   href: '/404',
-  //   icon: AlertCircleIcon,
-  //   title: 'Error'
-  // }
 ];
 
 const DashboardSidebar = ({ onMobileClose, openMobile }) => {

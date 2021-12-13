@@ -14,6 +14,10 @@ import SocialEdit from './pages/Social/Edit';
 import News from './pages/News/News';
 import NewsAdd from './pages/News/Add';
 import NewsEdit from './pages/News/Edit';
+import Jobs from './pages/Jobs/Jobs';
+import JobApplications from './pages/Jobs/JobApplications';
+import JobAdd from './pages/Jobs/Add';
+import JobEdit from './pages/Jobs/Edit';
 import Dashboard from './pages/Dashboard';
 import Contact from './pages/Contact/Contact';
 import Login from './pages/Login';
@@ -39,6 +43,11 @@ const routes = [
       { path: 'social/edit/:id', element: <SocialEdit /> },
       { path: 'social/add', element: <SocialAdd /> },
       { path: 'social', element: <Social /> },
+      { path: 'jobs/edit/:id', element: <JobEdit /> },
+      { path: 'jobs/add', element: <JobAdd /> },
+      { path: 'applications/:id', element: <JobApplications /> },
+      { path: 'applications', element: <JobApplications /> },
+      { path: 'jobs', element: <Jobs /> },
       { path: 'dashboard', element: <Dashboard /> },
       { path: 'contact', element: <Contact /> },
       { path: 'settings', element: <Settings /> },

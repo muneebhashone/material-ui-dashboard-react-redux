@@ -115,3 +115,32 @@ export const updateSettings = (data) => {
 export const getContacts = () => {
   return axios.get('/contact');
 };
+
+// Jobs
+
+export const getJobs = () => {
+  return axios.get('/job');
+};
+
+export const addJob = (data) => {
+  return axios.post('/job', data);
+};
+
+export const getSingleJob = (id) => {
+  return axios.get(`/job/${id}`);
+};
+
+export const getApplications = (id) => {
+  console.log(id);
+  return axios.get(`/job-application/${id}`);
+};
+
+export const updateJob = (data) => {
+  const jobId = data.id;
+  delete data.id;
+  return axios.patch(`/job/${jobId}`, data);
+};
+
+export const deleteJob = ({ id }) => {
+  return axios.delete(`/job/${id}`);
+};
