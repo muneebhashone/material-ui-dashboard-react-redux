@@ -13,7 +13,7 @@ import {
   Typography
 } from '@material-ui/core';
 import { useFormik } from 'formik';
-import { updateVideo, addVideo } from 'src/requests';
+import { updateJob, addJob } from 'src/requests';
 import { useMutation } from 'react-query';
 import uploadToCloudinary from 'src/utils/uploadToCloudinary';
 import { useParams } from 'react-router';
@@ -26,16 +26,23 @@ const linkRegex =
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required('Required'),
-  image: Yup.string().required('Required'),
-  link: Yup.string().matches(linkRegex, 'URL is not valid').required('Required')
+  description: Yup.string().required('Required'),
+  location: Yup.string().required('Required'),
+  type: Yup.string().required('Required'),
+  department: Yup.string().required('Required'),
+  experience: Yup.string().required('Required')
 });
 
 const Form = ({ data }) => {
+  const updateMutation = useMutation((data) => updateJob(data));
+  const addMutation = useMutation((data) => addJob(data));
+
   const [editor, setEditor] = useState('');
-  const updateMutation = useMutation((data) => updateVideo(data));
-  const addMutation = useMutation((data) => addVideo(data));
-  const [canAutogenerateThumbnail, setCanAutogenerateThumbnail] =
-    useState(false);
+
+  const handleEditorChange = (content, delta, source, editor) => {
+    setEditor(content);
+    console.log('content', content);
+  };
 
   const params = useParams();
 
@@ -45,22 +52,21 @@ const Form = ({ data }) => {
   const formik = useFormik({
     initialValues: {
       title: data?.title || '',
+      description: editor,
       location: data?.location || '',
-      type: data?.type || '',
-      description: data?.description || '',
+      type: data?.type || 'Full Time',
       status: data?.active || false,
       department: data?.department || '',
       experience: data?.experience || ''
     },
-    validationSchema,
     onSubmit: (values) => {
+      console.log(values);
       if (!params.id) {
         handleAddSubmit(values);
         return;
       }
 
       handleEditSubmit(values);
-      console.log(values);
     }
   });
 
@@ -69,9 +75,11 @@ const Form = ({ data }) => {
       {
         id: params.id,
         title: values.title,
-        link: values.link,
+        location: values.location,
+        type: values.type,
         description: values.description,
-        image: values.image,
+        department: values.department,
+        experience: values.experience,
         active: values.status
       },
       {
@@ -88,17 +96,18 @@ const Form = ({ data }) => {
     addMutation.mutate(
       {
         title: values.title,
-        location: values.link,
-        type: values.description,
-        description: values.image,
-        department: values.image,
-        experience: values.image,
+        location: values.location,
+        type: values.type,
+        description: values.description,
+        department: values.department,
+        experience: values.experience,
         active: values.status
       },
       {
         onSuccess: (data) => {
           notifyAdd();
           formik.resetForm();
+          setEditor('');
           console.log(data);
         },
         onError: (err) => console.log(err)
@@ -106,16 +115,11 @@ const Form = ({ data }) => {
     );
   };
 
-  const handleImage = async (image) => {
-    if (!image) return;
-    try {
-      const imgUrl = await uploadToCloudinary(image);
-      console.log(imgUrl);
-      formik.setFieldValue('image', imgUrl);
-    } catch (err) {
-      console.log(err);
+  useEffect(() => {
+    if (data?.description) {
+      setEditor(data.description);
     }
-  };
+  }, [data]);
 
   return (
     <Box>
@@ -206,8 +210,8 @@ const Form = ({ data }) => {
                             name="location"
                             onChange={formik.handleChange}
                           >
-                            <MenuItem value="Full Time">Remote</MenuItem>
-                            <MenuItem value="Part Time">On-site</MenuItem>
+                            <MenuItem value="Remote">Remote</MenuItem>
+                            <MenuItem value="On-site">On-site</MenuItem>
                           </Select>
                         </FormControl>
                       </Grid>
@@ -230,14 +234,27 @@ const Form = ({ data }) => {
                       </Grid>
                       <Grid item md={12} style={{ height: '500px' }}>
                         <InputLabel id="status-label">Description</InputLabel>
-                        <Editor
-                          initialValue={formik.values.description}
-                          onEditorChange={(nextState) =>
-                            formik.setFieldValue('description', nextState)
-                          }
-                        />
+                        <Editor value={editor} onChange={handleEditorChange} />
                       </Grid>
                     </Grid>
+                    <Box
+                      display="flex"
+                      flexDirection="row"
+                      gap="15px"
+                      justifyContent="flex-end"
+                      style={{ marginTop: '20px', textAlign: 'right' }}
+                    >
+                      <Button
+                        style={{
+                          padding: '15px',
+                          borderRadius: '6px'
+                        }}
+                        onClick={formik.handleSubmit}
+                        variant="contained"
+                      >
+                        {params.id ? 'Update Job' : 'Post Job'}
+                      </Button>
+                    </Box>
                   </form>
                 </Grid>
               </Grid>

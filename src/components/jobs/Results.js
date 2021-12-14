@@ -17,7 +17,7 @@ import { HiOutlineExternalLink } from 'react-icons/hi';
 import ActionMenu from '../action-menu/ActionMenu';
 import { useNavigate } from 'react-router';
 import { useMutation } from 'react-query';
-import { deleteVideo } from 'src/requests';
+import { deleteJob } from 'src/requests';
 import { toast } from 'react-toastify';
 import { URL } from 'src/config';
 
@@ -27,9 +27,7 @@ const Results = ({ refetchData, data, ...rest }) => {
   const [page, setPage] = useState(0);
   const [startPoint, setStartPoint] = useState(0);
   const [endPoint, setEndPoint] = useState(0);
-  const deleteMutation = useMutation('deleteVideo', (data) =>
-    deleteVideo(data)
-  );
+  const deleteMutation = useMutation('deleteJob', (data) => deleteJob(data));
   const notifyDelete = () => toast('Successfully deleted');
   const navigate = useNavigate();
   const handleLimitChange = (event) => {
@@ -51,7 +49,7 @@ const Results = ({ refetchData, data, ...rest }) => {
   };
 
   const handleEdit = (id) => {
-    navigate(`${URL}/app/videos/edit/${id}`);
+    navigate(`${URL}/app/jobs/edit/${id}`);
   };
 
   const handleDelete = (id) => {
@@ -85,7 +83,6 @@ const Results = ({ refetchData, data, ...rest }) => {
                 <TableCell>Location</TableCell>
                 <TableCell>Department</TableCell>
                 <TableCell>Experience</TableCell>
-                <TableCell>Description</TableCell>
                 <TableCell>Created</TableCell>
                 <TableCell align="center">Action</TableCell>
               </TableRow>
@@ -101,7 +98,6 @@ const Results = ({ refetchData, data, ...rest }) => {
                   <TableCell>{item.location}</TableCell>
                   <TableCell>{item.department}</TableCell>
                   <TableCell>{item.experience}</TableCell>
-                  <TableCell>{item.description}</TableCell>
                   <TableCell>
                     {moment(item.createdAt).format('DD/MM/YYYY')}
                   </TableCell>

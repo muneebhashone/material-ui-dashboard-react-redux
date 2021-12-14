@@ -5,13 +5,13 @@ import Toolbar from 'src/components/jobs/Toolbar';
 import Form from 'src/components/jobs/Form';
 import { useParams } from 'react-router';
 import { useQuery } from 'react-query';
-import { getSingleVideo } from 'src/requests';
+import { getSingleJob } from 'src/requests';
 
 const BrandsEdit = () => {
   const params = useParams();
   const { data, loading, error } = useQuery(
-    ['getSingleVideoQuery', params.id],
-    ({ queryKey }) => getSingleVideo(queryKey[1])
+    ['getSingleJobQuery', params.id],
+    ({ queryKey }) => getSingleJob(queryKey[1])
   );
 
   return (
