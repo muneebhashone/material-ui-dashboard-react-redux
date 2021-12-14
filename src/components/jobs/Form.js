@@ -228,7 +228,7 @@ const Form = ({ data }) => {
                           </Select>
                         </FormControl>
                       </Grid>
-                      <Grid item md={12}>
+                      <Grid item md={12} style={{ height: '500px' }}>
                         <InputLabel id="status-label">Description</InputLabel>
                         <Editor
                           initialValue={formik.values.description}

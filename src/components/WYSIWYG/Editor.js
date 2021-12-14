@@ -1,31 +1,47 @@
-import React, { useRef } from 'react';
-import { Editor } from '@tinymce/tinymce-react';
+import React, { useState } from 'react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import './Editor.css';
 
-export default function App(props) {
-  const editorRef = useRef(null);
+class MyEditor extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { text: '' }; // You can also pass a Quill Delta here
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(value) {
+    this.setState({ text: value });
+  }
+
+  render() {
+    return (
+      <ReactQuill
+        style={{ height: '420px' }}
+        theme="snow"
+        value={this.state.text}
+        onChange={this.handleChange}
+      />
+    );
+  }
+}
+
+function Editor() {
+  const [editor, setEditor] = useState('');
+
+  const handleChange = (content, delta, source, editor) => {
+    setEditor(content);
+    console.log('content', content);
+  };
 
   return (
-    <>
-      <Editor
-        {...props}
-        onInit={(evt, editor) => (editorRef.current = editor)}
-        init={{
-          height: 500,
-          menubar: false,
-          plugins: [
-            'advlist autolink lists link charmap print preview anchor',
-            'searchreplace visualblocks code fullscreen',
-            'insertdatetime table paste code help wordcount'
-          ],
-          toolbar:
-            'undo redo | formatselect | ' +
-            'bold italic backcolor | alignleft aligncenter ' +
-            'alignright alignjustify | bullist numlist outdent indent | ' +
-            'removeformat | help',
-          content_style:
-            'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-        }}
-      />
-    </>
+    <ReactQuill
+      style={{ height: '420px' }}
+      theme="snow"
+      value={editor}
+      onChange={handleChange}
+    />
   );
 }
+
+export default Editor;
