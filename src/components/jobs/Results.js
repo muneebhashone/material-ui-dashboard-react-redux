@@ -83,6 +83,7 @@ const Results = ({ refetchData, data, ...rest }) => {
                 <TableCell>Location</TableCell>
                 <TableCell>Department</TableCell>
                 <TableCell>Experience</TableCell>
+                <TableCell>Applications</TableCell>
                 <TableCell>Created</TableCell>
                 <TableCell align="center">Action</TableCell>
               </TableRow>
@@ -98,6 +99,7 @@ const Results = ({ refetchData, data, ...rest }) => {
                   <TableCell>{item.location}</TableCell>
                   <TableCell>{item.department}</TableCell>
                   <TableCell>{item.experience}</TableCell>
+                  <TableCell>{item.jobApplications}</TableCell>
                   <TableCell>
                     {moment(item.createdAt).format('DD/MM/YYYY')}
                   </TableCell>
