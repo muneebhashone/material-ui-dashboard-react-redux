@@ -25,10 +25,6 @@ const JobApplications = () => {
     );
   };
 
-  useEffect(() => {
-    console.log(data?.data?.data);
-  }, [data]);
-
   return (
     <>
       <Helmet>

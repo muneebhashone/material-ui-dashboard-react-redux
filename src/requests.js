@@ -131,7 +131,6 @@ export const getSingleJob = (id) => {
 };
 
 export const getApplications = (id) => {
-  console.log(id);
   return axios.get(`/job-application/${id}`);
 };
 
@@ -143,4 +142,9 @@ export const updateJob = (data) => {
 
 export const deleteJob = ({ id }) => {
   return axios.delete(`/job/${id}`);
+};
+
+export const deleteJobApplication = ({ id }) => {
+  console.log(id);
+  return axios.delete(`/job-application/${id}`);
 };

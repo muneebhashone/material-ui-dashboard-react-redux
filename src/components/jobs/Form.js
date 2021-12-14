@@ -121,6 +121,10 @@ const Form = ({ data }) => {
     }
   }, [data]);
 
+  useEffect(() => {
+    formik.setFieldValue('description', editor);
+  }, [editor]);
+
   return (
     <Box>
       <Box>

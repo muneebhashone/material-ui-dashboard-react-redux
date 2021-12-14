@@ -13,22 +13,26 @@ import {
   TableRow,
   Typography
 } from '@material-ui/core';
-import { HiOutlineExternalLink } from 'react-icons/hi';
 import ActionMenu from '../action-menu/ApplicationsMenu';
 import { useNavigate } from 'react-router';
 import { useMutation } from 'react-query';
-import { deleteVideo } from 'src/requests';
+import { deleteJobApplication } from 'src/requests';
 import { toast } from 'react-toastify';
 import { URL } from 'src/config';
+import CoverLetterModal from './CoverLetterModal.js';
 
 const Results = ({ refetchData, data, ...rest }) => {
+  const [open, setOpen] = useState(false);
+
+  const [coverData, setCoverData] = useState('');
+
   const [selectedDataIds, setSelectedDataIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
   const [startPoint, setStartPoint] = useState(0);
   const [endPoint, setEndPoint] = useState(0);
-  const deleteMutation = useMutation('deleteVideo', (data) =>
-    deleteVideo(data)
+  const deleteMutation = useMutation('deleteJobApplication', (data) =>
+    deleteJobApplication(data)
   );
   const notifyDelete = () => toast('Successfully deleted');
   const navigate = useNavigate();
@@ -65,6 +69,22 @@ const Results = ({ refetchData, data, ...rest }) => {
       }
     );
   };
+
+  const handleViewCoverLetter = (coverLetter) => {
+    setCoverData(coverLetter);
+  };
+
+  const handleClose = () => {
+    setCoverData('');
+  };
+
+  useEffect(() => {
+    if (!coverData) {
+      setOpen(false);
+    } else {
+      setOpen(true);
+    }
+  }, [coverData]);
 
   useEffect(() => {
     setEndPoint(limit);
@@ -109,7 +129,7 @@ const Results = ({ refetchData, data, ...rest }) => {
                       handleViewCoverLetter={
                         item.coverLetter
                           ? () => {
-                              handleViewCoverLetter(item._id);
+                              handleViewCoverLetter(item.coverLetter);
                             }
                           : false
                       }
@@ -130,6 +150,7 @@ const Results = ({ refetchData, data, ...rest }) => {
         rowsPerPage={limit}
         rowsPerPageOptions={[5, 10, 25]}
       />
+      <CoverLetterModal open={open} onClose={handleClose} data={coverData} />
     </Card>
   );
 };

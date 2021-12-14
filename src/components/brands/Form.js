@@ -167,7 +167,6 @@ const Form = ({ data }) => {
                           label="Brand Description"
                           multiline
                           rows={4}
-                          value={formik.values.description}
                           variant="outlined"
                           placeholder="Brand Description"
                           name="description"
