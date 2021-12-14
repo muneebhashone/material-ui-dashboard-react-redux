@@ -11,8 +11,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import UserProvider from 'src/Context/UserContext';
 
-// axios.defaults.baseURL = 'http://178.79.129.18/api/v1';
-axios.defaults.baseURL = 'http://localhost:9000/api/v1';
+axios.defaults.baseURL = 'http://178.79.129.18/api/v1';
+// axios.defaults.baseURL = 'http://localhost:9000/api/v1';
 const queryClient = new QueryClient();
 
 const App = () => {
