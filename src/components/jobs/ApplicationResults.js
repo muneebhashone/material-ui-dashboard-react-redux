@@ -125,7 +125,11 @@ const Results = ({ refetchData, data, ...rest }) => {
                     <ActionMenu
                       handleDelete={() => handleDelete(item._id)}
                       handleViewResume={item.resume}
-                      handleViewLinkedin={item.linkedinProfileURL}
+                      handleViewLinkedin={
+                        item.linkedinProfileURL.includes('http') === true
+                          ? item.linkedinProfileURL
+                          : `https://${item.linkedinProfileURL}`
+                      }
                       handleViewCoverLetter={
                         item.coverLetter
                           ? () => {
