@@ -100,8 +100,9 @@ const Results = ({ refetchData, data, ...rest }) => {
                 <TableCell>Name</TableCell>
                 <TableCell>Email</TableCell>
                 <TableCell>Address</TableCell>
+                <TableCell>City</TableCell>
+                <TableCell>Country</TableCell>
                 <TableCell>Phone</TableCell>
-                <TableCell>Description</TableCell>
                 <TableCell>Submit Date</TableCell>
                 <TableCell align="center">Action</TableCell>
               </TableRow>
@@ -115,9 +116,10 @@ const Results = ({ refetchData, data, ...rest }) => {
                 >
                   <TableCell>{item.name}</TableCell>
                   <TableCell>{item.email}</TableCell>
-                  <TableCell>{`${item.address}, ${item.city}, ${item.state}, ${item.postal}`}</TableCell>
+                  <TableCell>{`${item.address || 'No Address'}`}</TableCell>
+                  <TableCell>{`${item.city || 'No City'}`}</TableCell>
+                  <TableCell>{`${item.country || 'No Country'}`}</TableCell>
                   <TableCell>{item.phone}</TableCell>
-                  <TableCell>{item.description}</TableCell>
                   <TableCell>
                     {moment(item.createdAt).format('DD/MM/YYYY')}
                   </TableCell>

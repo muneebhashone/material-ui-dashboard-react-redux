@@ -19,6 +19,7 @@ import { toast } from 'react-toastify';
 import { URL } from 'src/config';
 
 const Results = ({ refetchData, data, ...rest }) => {
+  console.log(data);
   const [selectedDataIds, setSelectedDataIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
@@ -61,6 +62,7 @@ const Results = ({ refetchData, data, ...rest }) => {
                 <TableCell>Email</TableCell>
                 <TableCell>Phone</TableCell>
                 <TableCell>Description</TableCell>
+                <TableCell>Picked</TableCell>
                 <TableCell>Created</TableCell>
               </TableRow>
             </TableHead>
@@ -75,7 +77,7 @@ const Results = ({ refetchData, data, ...rest }) => {
                   <TableCell>{item.companyName || 'No Company Name'}</TableCell>
 
                   <TableCell>{item.email}</TableCell>
-                  <TableCell>{item.phone}</TableCell>
+                  <TableCell>{item.phone || 'No Phone Number'}</TableCell>
                   <TableCell>
                     <div
                       style={{ maxWidth: '400px', overflowWrap: 'break-word' }}
@@ -84,6 +86,9 @@ const Results = ({ refetchData, data, ...rest }) => {
                     </div>
                   </TableCell>
 
+                  <TableCell>
+                    {moment(item.dateTime).format('DD/MM/YYYY HH:MM')}
+                  </TableCell>
                   <TableCell>
                     {moment(item.createdAt).format('DD/MM/YYYY')}
                   </TableCell>
