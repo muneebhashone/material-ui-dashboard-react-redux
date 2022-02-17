@@ -21,7 +21,7 @@ import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 
 const linkRegex =
-  /^((ftp|http|https):\/\/)?(www.)?(?!.*(ftp|http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gm;
+  /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required('Required'),
@@ -226,7 +226,6 @@ const Form = ({ data }) => {
                           label="Description"
                           multiline
                           rows={4}
-                          value={formik.values.description}
                           variant="outlined"
                           placeholder="Description"
                           name="description"
