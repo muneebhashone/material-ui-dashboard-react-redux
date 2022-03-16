@@ -46,7 +46,8 @@ const Form = ({ data }) => {
       description: data?.description || '',
       image: data?.image || '',
       link: data?.link || '',
-      status: data?.active || false
+      status: data?.active || false,
+      showDate: data?.showDate || false
     },
     validationSchema,
     onSubmit: (values) => {
@@ -68,7 +69,8 @@ const Form = ({ data }) => {
         link: values.link,
         description: values.description,
         image: values.image,
-        active: values.status
+        active: values.status,
+        showDate: values.showDate
       },
       {
         onSuccess: (data) => {
@@ -87,7 +89,8 @@ const Form = ({ data }) => {
         link: values.link,
         description: values.description,
         image: values.image,
-        active: values.status
+        active: values.status,
+        showDate: values.showDate
       },
       {
         onSuccess: (data) => {
@@ -170,7 +173,7 @@ const Form = ({ data }) => {
                           onChange={formik.handleChange}
                         />
                       </Grid>
-                      <Grid item md={9}>
+                      <Grid item md={6}>
                         <TextField
                           value={formik.values.title}
                           variant="outlined"
@@ -203,6 +206,24 @@ const Form = ({ data }) => {
                           </Select>
                         </FormControl>
                       </Grid>
+
+                      <Grid item md={3}>
+                        <FormControl fullWidth>
+                          <InputLabel id="showDate-label">Show Date</InputLabel>
+                          <Select
+                            labelId="showDate-label"
+                            id="showDate"
+                            value={formik.values.showDate}
+                            label="Status"
+                            name="showDate"
+                            onChange={formik.handleChange}
+                          >
+                            <MenuItem value={false}>No</MenuItem>
+                            <MenuItem value={true}>Yes</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </Grid>
+
                       <Grid item md={4}>
                         <img
                           width="100%"

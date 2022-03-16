@@ -10,7 +10,8 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Typography
+  Typography,
+  Checkbox
 } from '@material-ui/core';
 import { useFormik } from 'formik';
 import { updateNews, addNews } from 'src/requests';
@@ -40,6 +41,7 @@ const Form = ({ data }) => {
       description: data?.description || '',
       image: data?.image || '',
       status: data?.active || false,
+      showDate: data?.showDate || false,
       link: data?.link || ''
     },
     validationSchema,
@@ -62,7 +64,8 @@ const Form = ({ data }) => {
         title: values.title,
         description: values.description,
         image: values.image,
-        active: values.status
+        active: values.status,
+        showDate: values.showDate
       },
       {
         onSuccess: (data) => {
@@ -81,7 +84,8 @@ const Form = ({ data }) => {
         description: values.description,
         image: values.image,
         link: values.link,
-        active: values.status
+        active: values.status,
+        showDate: values.showDate
       },
       {
         onSuccess: (data) => {
@@ -133,7 +137,7 @@ const Form = ({ data }) => {
                           onChange={formik.handleChange}
                         />
                       </Grid>
-                      <Grid item md={9}>
+                      <Grid item md={6}>
                         <TextField
                           value={formik.values.title}
                           variant="outlined"
@@ -166,6 +170,22 @@ const Form = ({ data }) => {
                           </Select>
                         </FormControl>
                       </Grid>
+                      <Grid item md={3}>
+                        <FormControl fullWidth>
+                          <InputLabel id="showDate-label">Show Date</InputLabel>
+                          <Select
+                            labelId="showDate-label"
+                            id="showDate"
+                            value={formik.values.showDate}
+                            label="Status"
+                            name="showDate"
+                            onChange={formik.handleChange}
+                          >
+                            <MenuItem value={false}>No</MenuItem>
+                            <MenuItem value={true}>Yes</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </Grid>
                       <Grid item md={4}>
                         <img
                           width="100%"
@@ -189,7 +209,6 @@ const Form = ({ data }) => {
                           label="News Description"
                           multiline
                           rows={4}
-                          value={formik.values.description}
                           variant="outlined"
                           placeholder="News Description"
                           name="description"
